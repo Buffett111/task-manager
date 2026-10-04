@@ -1,5 +1,10 @@
 // 只依傳入資料建立畫面，不在這裡新增或刪除任務資料。
-export function renderTasks(tasks, listElement, onDeleteTask) {
+export function renderTasks(
+  tasks,
+  listElement,
+  onToggleTask,
+  onDeleteTask
+) {
   listElement.replaceChildren();
 
   tasks.forEach((task) => {
@@ -11,10 +16,18 @@ export function renderTasks(tasks, listElement, onDeleteTask) {
     content.className = "task-content";
 
     const checkbox = document.createElement("input");
+
     checkbox.type = "checkbox";
     checkbox.checked = task.completed;
-    checkbox.disabled = true; // 完成／取消完成留待下一個練習。
-    checkbox.setAttribute("aria-label", `完成狀態：${task.title}（尚未開放操作）`);
+
+    checkbox.setAttribute(
+      "aria-label",
+      `切換完成狀態：${task.title}`
+    );
+
+    checkbox.addEventListener("change", () => {
+      onToggleTask(task.id);
+    });
 
     const title = document.createElement("span");
     title.textContent = task.title; // 將輸入當成文字，避免被解析成 HTML。

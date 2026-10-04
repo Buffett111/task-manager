@@ -1,6 +1,8 @@
 import { tasks } from "../state/tasks.js";
 import { addTask } from "../actions/addTask.js";
 import { deleteTask } from "../actions/deleteTask.js";
+import { toggleTask } from "../actions/toggleTask.js";
+import { filterTasks } from "../filters/filterTasks.js";
 import { validateTask } from "../validation/validateTask.js";
 import { renderTasks } from "../render/renderTasks.js";
 import { renderStats } from "../render/renderStats.js";
@@ -8,9 +10,26 @@ import { renderStats } from "../render/renderStats.js";
 const taskInput = document.querySelector("#taskInput");
 const taskList = document.querySelector(".task-list");
 const feedback = document.querySelector("#taskFeedback");
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+const filterValues = [
+  "all",
+  "pending",
+  "completed"
+];
+
+let currentFilter = "all";
 
 function updateView() {
-  renderTasks(tasks, taskList, onDeleteTask);
+  const visibleTasks = filterTasks(tasks, currentFilter);
+
+  renderTasks(
+    visibleTasks,
+    taskList,
+    onToggleTask,
+    onDeleteTask
+  );
+
   renderStats(tasks);
 }
 
@@ -33,9 +52,24 @@ function onAddTask() {
   taskInput.focus();
 }
 
-function onFilterTasks(filter) {}
+function onFilterTasks(filter) {
+  currentFilter = filter;
 
-function onToggleTask(taskId) {}
+  filterButtons.forEach((button, index) => {
+    button.classList.toggle(
+      "active",
+      filterValues[index] === filter
+    );
+  });
+
+  updateView();
+}
+
+function onToggleTask(taskId) {
+  toggleTask(taskId);
+  updateView();
+  feedback.textContent = "任務完成狀態已切換。";
+}
 
 function onDeleteTask(taskId) {
   if (!deleteTask(taskId)) return;
