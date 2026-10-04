@@ -1,5 +1,6 @@
 import { tasks } from "../state/tasks.js";
 import { addTask } from "../actions/addTask.js";
+import { deleteTask } from "../actions/deleteTask.js";
 import { validateTask } from "../validation/validateTask.js";
 import { renderTasks } from "../render/renderTasks.js";
 import { renderStats } from "../render/renderStats.js";
@@ -36,7 +37,13 @@ function onFilterTasks(filter) {}
 
 function onToggleTask(taskId) {}
 
-function onDeleteTask(taskId) {}
+function onDeleteTask(taskId) {
+  if (!deleteTask(taskId)) return;
+
+  updateView();
+  feedback.textContent = "任務已刪除。";
+  taskInput.focus();
+}
 
 document.querySelector(".add-btn").addEventListener("click", onAddTask);
 document.querySelectorAll(".filter-btn").forEach((button, index) => {
