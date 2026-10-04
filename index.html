@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#254c3d" />
     <link rel="stylesheet" href="src/styles/main.css" />
-    <script src="src/ui/triggers.js" defer></script>
+    <script type="module" src="src/ui/triggers.js"></script>
     <h1>我的任務 · Task Manager</h1>
     <p>今天也完成一點事情吧！</p>
   </header>
@@ -20,17 +20,19 @@
 
       <div class="input-group">
         <input
-          id="taskInput"
+          id="taskInput" aria-describedby="taskFeedback"
           type="text"
           placeholder="例如：完成 JavaScript 練習"
         >
 
-        <button class="add-btn">
+        <button type="button" class="add-btn">
           ＋ 新增
         </button>
       </div>
     </section>
 
+
+    <p id="taskFeedback" role="status" aria-live="polite" style="padding: 0 28px;"></p>
 
     <!-- 篩選區 -->
     <section class="filter-section">
@@ -43,46 +45,17 @@
     <!-- 任務清單 -->
     <section class="task-section">
 
-      <ul class="task-list">
-        <li class="task-item">
-          <div class="task-content">
-            <input type="checkbox">
-            <span>完成 Web App 實作</span>
-          </div>
-
-          <button class="delete-btn">刪除</button>
-        </li>
-
-
-        <li class="task-item">
-          <div class="task-content">
-            <input type="checkbox">
-            <span>完成 JavaScript 練習</span>
-          </div>
-
-          <button class="delete-btn">刪除</button>
-        </li>
-
-
-        <li class="task-item completed">
-          <div class="task-content">
-            <input type="checkbox" checked>
-            <span>完成課程作業</span>
-          </div>
-
-          <button class="delete-btn">刪除</button>
-        </li>
-
-      </ul>
+      <!-- 清單由 renderTasks() 依 tasks 陣列產生。 -->
+      <ul class="task-list"></ul>
 
     </section>
 
 
     <!-- 統計資訊 -->
     <section class="stats-section">
-      <span>共 <strong>3</strong> 項</span>
-      <span>未完成 <strong>2</strong> 項</span>
-      <span>已完成 <strong>1</strong> 項</span>
+      <span>共 <strong id="totalCount">3</strong> 項</span>
+      <span>未完成 <strong id="pendingCount">2</strong> 項</span>
+      <span>已完成 <strong id="completedCount">1</strong> 項</span>
     </section>
 
   </main>
