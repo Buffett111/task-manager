@@ -33,5 +33,3 @@ npm run preview
 事件函式位於 App 內，透過 setTasks 的函式形式取得最新資料。新增使用新陣列、完成切換使用 map、刪除使用 filter；React 依 state 更新畫面。每筆任務有穩定 id 作為 key，同名任務也能分別操作。
 
 任務僅存在記憶體，重新整理會回復三筆初始任務。
-
-測試結果與截圖請見 [TESTING.md](TESTING.md)。

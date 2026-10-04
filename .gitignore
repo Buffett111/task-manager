@@ -1,3 +1,11 @@
 node_modules/
 dist/
 *.log
+
+# Keep submission reports and generated evidence outside this repository.
+/docs/
+/reports/
+/screenshots/
+/test-results/
+/playwright-report/
+/react/TESTING.md
