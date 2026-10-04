@@ -38,8 +38,9 @@ function onAddTask() {
   const title = taskInput.value.trim();
 
   if (!validateTask(title)) {
-    feedback.textContent = "請輸入任務名稱，不能只有空白。";
+    feedback.textContent = "不能輸入空白，請輸入任務名稱。";
     taskInput.setAttribute("aria-invalid", "true");
+    window.alert("不能輸入空白，請輸入任務名稱。");
     taskInput.focus();
     return;
   }
