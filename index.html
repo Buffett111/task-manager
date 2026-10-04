@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#254c3d" />
+    <title>我的任務 · Task Manager</title>
+    <link rel="stylesheet" href="src/styles/main.css" />
+    <script src="src/ui/triggers.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand" aria-label="Task Manager 任務管理">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="m6 12 4 4 8-9" /></svg>
+          </span>
+          <span>Task Manager</span>
+        </div>
+        <span class="prototype-badge"><span aria-hidden="true"></span>介面原型</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">A LITTLE FOCUS, EVERY DAY</p>
+        <h1 id="page-title">我的任務<span class="title-dot" aria-hidden="true">.</span></h1>
+        <p class="intro-copy">留一點空間給專注，從完成一件小事開始。</p>
+      </section>
+
+      <section class="task-summary" aria-label="任務統計，靜態示範資料">
+        <div class="summary-item">
+          <span class="summary-label">所有任務</span>
+          <strong class="summary-number">03<span>件</span></strong>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label"><span class="status-dot pending-dot" aria-hidden="true"></span>未完成</span>
+          <strong class="summary-number">02<span>件</span></strong>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label"><span class="status-dot complete-dot" aria-hidden="true"></span>已完成</span>
+          <strong class="summary-number">01<span>件</span></strong>
+        </div>
+        <div class="summary-note" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M24 6v7M24 35v7M6 24h7M35 24h7M11.3 11.3l5 5M31.7 31.7l5 5M11.3 36.7l5-5M31.7 16.3l5-5" /><circle cx="24" cy="24" r="8" /></svg>
+          <span>一步一步，<br />慢慢完成。</span>
+        </div>
+      </section>
+
+      <section class="task-board" aria-labelledby="task-list-title">
+        <div class="add-task-section">
+          <label for="task-input">新增任務</label>
+          <div class="add-task-row">
+            <input id="task-input" name="task" type="text" placeholder="接下來，想完成什麼？" autocomplete="off" aria-describedby="input-hint" />
+            <button class="add-button" type="button" onclick="onAddTask()">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              <span>新增任務</span>
+            </button>
+          </div>
+          <p class="input-hint" id="input-hint">把想做的事記下來，讓思緒輕一點。</p>
+        </div>
+
+        <div class="list-toolbar">
+          <h2 id="task-list-title">任務清單 <span>3</span></h2>
+          <div class="filters" role="group" aria-label="篩選任務">
+            <button class="filter-button is-active" type="button" aria-pressed="true" onclick="onFilterTasks('all')">全部</button>
+            <button class="filter-button" type="button" aria-pressed="false" onclick="onFilterTasks('pending')">未完成</button>
+            <button class="filter-button" type="button" aria-pressed="false" onclick="onFilterTasks('completed')">已完成</button>
+          </div>
+        </div>
+
+        <ul class="task-list" aria-label="三筆示範任務">
+          <li class="task-item">
+            <button class="task-checkbox" type="button" role="checkbox" aria-checked="false" aria-label="標記「完成課堂實作的介面設計」為已完成" onclick="onToggleTask('task-1')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 12 4 4 8-8" /></svg>
+            </button>
+            <div class="task-content">
+              <span class="task-title">完成課堂實作的介面設計</span>
+              <span class="task-detail">先把想法，變成看得見的樣子。</span>
+            </div>
+            <span class="task-status">未完成</span>
+            <button class="delete-button" type="button" aria-label="刪除任務：完成課堂實作的介面設計" onclick="onDeleteTask('task-1')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5" /></svg>
+            </button>
+          </li>
+          <li class="task-item">
+            <button class="task-checkbox" type="button" role="checkbox" aria-checked="false" aria-label="標記「整理 Git 提交與開發紀錄」為已完成" onclick="onToggleTask('task-2')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 12 4 4 8-8" /></svg>
+            </button>
+            <div class="task-content">
+              <span class="task-title">整理 Git 提交與開發紀錄</span>
+              <span class="task-detail">為每一步進展，留下清楚的紀錄。</span>
+            </div>
+            <span class="task-status">未完成</span>
+            <button class="delete-button" type="button" aria-label="刪除任務：整理 Git 提交與開發紀錄" onclick="onDeleteTask('task-2')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5" /></svg>
+            </button>
+          </li>
+          <li class="task-item is-completed">
+            <button class="task-checkbox" type="button" role="checkbox" aria-checked="true" aria-label="標記「閱讀專案需求文件」為未完成" onclick="onToggleTask('task-3')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 12 4 4 8-8" /></svg>
+            </button>
+            <div class="task-content">
+              <span class="task-title">閱讀專案需求文件</span>
+              <span class="task-detail">好的開始，來自理解要做的事。</span>
+            </div>
+            <span class="task-status">已完成</span>
+            <button class="delete-button" type="button" aria-label="刪除任務：閱讀專案需求文件" onclick="onDeleteTask('task-3')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5" /></svg>
+            </button>
+          </li>
+        </ul>
+
+        <div class="board-footer">
+          <span><span class="footer-dot" aria-hidden="true"></span>還有 <strong>2</strong> 件任務，等你慢慢完成</span>
+          <span class="sample-label">示範資料</span>
+        </div>
+      </section>
+
+      <footer class="workspace-footer">
+        <p>目前為靜態介面原型；新增、篩選、完成與刪除操作皆待開發。</p>
+        <span>MAKE ROOM FOR WHAT MATTERS</span>
+      </footer>
+    </main>
+  </body>
+</html>
